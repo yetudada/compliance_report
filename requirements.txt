@@ -1,8 +1,8 @@
 # PlayToWin Data Platform - Python Dependencies
 # Apache Airflow orchestration platform for betting analytics
-
-# Core Airflow - pinned to specific version
-apache-airflow==3.0.6
+#
+# NOTE: apache-airflow version is controlled by the Docker base image,
+# not this requirements.txt file. See Dockerfile for Airflow version.
 
 # Airflow Providers
 apache-airflow-providers-snowflake
