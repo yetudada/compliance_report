@@ -1,0 +1,42 @@
+# Example: Weekly ML analysis of betting patterns using Jupyter Notebook Blueprint
+# This DAG runs a notebook that performs ML-based pattern detection on betting behavior
+
+blueprint: jupyter_notebook
+
+config:
+  dag_id: weekly_betting_patterns_ml
+
+  description: >
+    Weekly machine learning analysis of betting patterns to identify trends,
+    anomalies, and potential problem gambling behaviors. Generates visualizations
+    and recommendations for the responsible gaming team.
+
+  schedule: "0 9 * * MON"  # Every Monday at 9 AM
+
+  notebook_path: include/notebooks/betting_patterns_analysis.ipynb
+
+  output_path: include/notebooks/output/betting_patterns_{{ ds }}.ipynb
+
+  parameters:
+    # Parameters passed to the notebook
+    lookback_days: 7
+    min_transaction_count: 10
+    anomaly_threshold: 2.5
+    table_name: demo.playtowin.bet_transactions_history
+    snowflake_connection: snowflake
+    output_chart_dir: include/notebooks/output/charts
+
+  owner: data_science_team
+
+  retries: 1
+
+  retry_delay_minutes: 15
+
+  tags:
+    - jupyter
+    - machine-learning
+    - betting-patterns
+    - responsible-gaming
+    - weekly
+
+  kernel_name: python3
