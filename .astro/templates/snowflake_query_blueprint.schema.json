@@ -1,0 +1,90 @@
+{
+  "description": "Configuration model for Snowflake query scheduling.",
+  "properties": {
+    "dag_id": {
+      "description": "Unique identifier for this DAG (e.g., 'weekly_revenue_report')",
+      "title": "Dag Id",
+      "type": "string"
+    },
+    "description": {
+      "description": "Brief description of what this query does",
+      "title": "Description",
+      "type": "string"
+    },
+    "schedule": {
+      "description": "Cron expression or preset (e.g., '@daily', '0 0 * * *')",
+      "title": "Schedule",
+      "type": "string"
+    },
+    "sql_query": {
+      "description": "The SQL query to execute in Snowflake",
+      "title": "Sql Query",
+      "type": "string"
+    },
+    "snowflake_conn_id": {
+      "default": "snowflake",
+      "description": "Airflow connection ID for Snowflake",
+      "title": "Snowflake Conn Id",
+      "type": "string"
+    },
+    "owner": {
+      "default": "analytics_team",
+      "description": "Owner of this DAG",
+      "title": "Owner",
+      "type": "string"
+    },
+    "retries": {
+      "default": 2,
+      "description": "Number of retries on failure (0-5)",
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Retries",
+      "type": "integer"
+    },
+    "retry_delay_minutes": {
+      "default": 5,
+      "description": "Minutes to wait between retries",
+      "maximum": 60,
+      "minimum": 1,
+      "title": "Retry Delay Minutes",
+      "type": "integer"
+    },
+    "tags": {
+      "description": "Tags to categorize this DAG",
+      "items": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+    },
+    "start_date": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "When to start the DAG (defaults to 2024-01-01)",
+      "title": "Start Date"
+    },
+    "blueprint": {
+      "type": "string",
+      "const": "snowflake_query_blueprint",
+      "description": "The blueprint template to use"
+    }
+  },
+  "required": [
+    "blueprint",
+    "dag_id",
+    "description",
+    "schedule",
+    "sql_query"
+  ],
+  "title": "SnowflakeQueryBlueprint Configuration",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

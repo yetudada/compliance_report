@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "compliance-report"
 version = "0.1.0"
@@ -7,5 +11,10 @@ dependencies = [
     "apache-airflow==3.0.6",
     "apache-airflow-providers-snowflake",
     "apache-airflow-providers-common-sql",
+    "apache-airflow-providers-papermill",
     "pandas",
+    "airflow-blueprint",
 ]
+
+[tool.setuptools]
+packages = []

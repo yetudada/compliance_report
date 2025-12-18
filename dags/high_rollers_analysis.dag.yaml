@@ -1,0 +1,44 @@
+# Example: Daily high-roller player analysis using Snowflake Query Blueprint
+# This DAG identifies and analyzes high-value players from the bet transactions table
+
+blueprint: snowflake_query
+
+config:
+  dag_id: high_rollers_daily_analysis
+
+  description: >
+    Daily analysis of high-roller players who placed bets over $1,000 in the last 24 hours.
+    Used for VIP customer engagement and retention strategies.
+
+  schedule: "0 6 * * *"  # Daily at 6 AM
+
+  sql_query: |
+    SELECT
+      user_id,
+      COUNT(*) as total_bets,
+      SUM(bet_amount) as total_wagered,
+      SUM(payout_amount) as total_payouts,
+      SUM(payout_amount - bet_amount) as net_winnings,
+      MAX(bet_amount) as largest_bet,
+      AVG(bet_amount) as avg_bet_size
+    FROM demo.playtowin.bet_transactions_history
+    WHERE bet_timestamp >= DATEADD(day, -1, CURRENT_TIMESTAMP())
+      AND bet_amount > 1000
+    GROUP BY user_id
+    ORDER BY total_wagered DESC
+    LIMIT 50;
+
+  snowflake_conn_id: snowflake
+
+  owner: vip_team
+
+  retries: 2
+
+  retry_delay_minutes: 10
+
+  tags:
+    - snowflake
+    - analytics
+    - high-rollers
+    - vip
+    - daily

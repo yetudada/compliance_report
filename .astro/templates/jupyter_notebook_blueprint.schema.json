@@ -1,0 +1,102 @@
+{
+  "description": "Configuration model for Jupyter notebook scheduling.",
+  "properties": {
+    "dag_id": {
+      "description": "Unique identifier for this DAG (e.g., 'monthly_player_analysis')",
+      "title": "Dag Id",
+      "type": "string"
+    },
+    "description": {
+      "description": "Brief description of what this notebook does",
+      "title": "Description",
+      "type": "string"
+    },
+    "schedule": {
+      "description": "Cron expression or preset (e.g., '@weekly', '0 9 * * MON')",
+      "title": "Schedule",
+      "type": "string"
+    },
+    "notebook_path": {
+      "description": "Path to the input notebook (e.g., 'include/notebooks/analysis.ipynb')",
+      "title": "Notebook Path",
+      "type": "string"
+    },
+    "output_path": {
+      "description": "Path where executed notebook will be saved (e.g., 'include/notebooks/output/analysis_{{ ds }}.ipynb')",
+      "title": "Output Path",
+      "type": "string"
+    },
+    "parameters": {
+      "additionalProperties": true,
+      "description": "Parameters to pass to the notebook (accessible via papermill)",
+      "title": "Parameters",
+      "type": "object"
+    },
+    "owner": {
+      "default": "data_science_team",
+      "description": "Owner of this DAG",
+      "title": "Owner",
+      "type": "string"
+    },
+    "retries": {
+      "default": 1,
+      "description": "Number of retries on failure (0-5)",
+      "maximum": 5,
+      "minimum": 0,
+      "title": "Retries",
+      "type": "integer"
+    },
+    "retry_delay_minutes": {
+      "default": 10,
+      "description": "Minutes to wait between retries",
+      "maximum": 60,
+      "minimum": 1,
+      "title": "Retry Delay Minutes",
+      "type": "integer"
+    },
+    "tags": {
+      "description": "Tags to categorize this DAG",
+      "items": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "array"
+    },
+    "start_date": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "description": "When to start the DAG (defaults to 2024-01-01)",
+      "title": "Start Date"
+    },
+    "kernel_name": {
+      "default": "python3",
+      "description": "Jupyter kernel to use for execution",
+      "title": "Kernel Name",
+      "type": "string"
+    },
+    "blueprint": {
+      "type": "string",
+      "const": "jupyter_notebook_blueprint",
+      "description": "The blueprint template to use"
+    }
+  },
+  "required": [
+    "blueprint",
+    "dag_id",
+    "description",
+    "schedule",
+    "notebook_path",
+    "output_path"
+  ],
+  "title": "JupyterNotebookBlueprint Configuration",
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
