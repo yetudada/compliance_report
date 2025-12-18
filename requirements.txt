@@ -1,0 +1,16 @@
+# PlayToWin Data Platform - Python Dependencies
+# Apache Airflow orchestration platform for betting analytics
+
+# Core Airflow - pinned to specific version
+apache-airflow==3.0.6
+
+# Airflow Providers
+apache-airflow-providers-snowflake
+apache-airflow-providers-common-sql
+apache-airflow-providers-papermill
+
+# Data Processing
+pandas
+
+# Blueprint - Templated DAG framework
+airflow-blueprint
